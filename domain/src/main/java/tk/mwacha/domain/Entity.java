@@ -16,4 +16,7 @@ public abstract class Entity <ID extends Identifier> {
         Objects.requireNonNull(id, "id should not be null");
         this.id = id;
     }
+
+    public abstract void validate(ValidationHandler handler);
+
 }
