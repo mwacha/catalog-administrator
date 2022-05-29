@@ -1,17 +1,7 @@
 package tk.mwacha.application;
 
-import tk.mwacha.domain.category.Category;
+public abstract class UseCase<IN, OUT> {
 
-public class UseCase {
+    public abstract OUT execute(IN in);
 
-    public Category execute() {
-        final var expectedName = "Filmes";
-        final var expectedDescription = "A categoria mais assistida";
-        final var expectedIsActive = true;
-
-        final var actualCategory =
-                Category.newCategory(expectedName, expectedDescription, expectedIsActive);
-
-        return actualCategory;
-    }
 }
