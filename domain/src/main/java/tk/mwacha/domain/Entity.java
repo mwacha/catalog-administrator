@@ -2,6 +2,7 @@ package tk.mwacha.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import tk.mwacha.domain.validation.ValidationHandler;
 
 import java.util.Objects;
 

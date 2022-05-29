@@ -1,6 +1,7 @@
 package tk.mwacha.domain.category;
 
 import tk.mwacha.domain.AggregateRoot;
+import tk.mwacha.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
@@ -33,7 +34,8 @@ public class Category extends AggregateRoot<CategoryID> {
                                        final String description,
                                        final boolean active) {
 
-        return new Category(CategoryID.unique(), name, description, active, Instant.now(), Instant.now(), null);
+        var deletedAt = active ? null : Instant.now();
+        return new Category(CategoryID.unique(), name, description, active, Instant.now(), Instant.now(), deletedAt);
     }
 
     public CategoryID getId() {
@@ -62,5 +64,43 @@ public class Category extends AggregateRoot<CategoryID> {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    @Override
+    public void validate(ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
+    }
+
+    public Category activate() {
+        this.deletedAt = null;
+
+        this.active = true;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category deactivate() {
+        if(getDeletedAt() == null) {
+            this.deletedAt = Instant.now();
+        }
+
+        this.active = false;
+        this.updatedAt = Instant.now();
+        return this;
+    }
+
+    public Category update(final String name, final String description, final boolean isActive) {
+
+        if(isActive) {
+            activate();
+        } else {
+            deactivate();
+        }
+
+        this.name = name;
+        this.description = description;
+        this.updatedAt = Instant.now();
+
+        return this;
     }
 }
