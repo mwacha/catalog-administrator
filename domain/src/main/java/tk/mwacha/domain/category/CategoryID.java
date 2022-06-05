@@ -1,22 +1,21 @@
 package tk.mwacha.domain.category;
 
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import tk.mwacha.domain.Identifier;
 
 import java.util.Objects;
 import java.util.UUID;
 
 
-@EqualsAndHashCode
-@Getter
 public class CategoryID extends Identifier {
 
     @NonNull
     private final UUID value;
+
+    public UUID getValue() {
+        return value;
+    }
 
     private CategoryID(final UUID value) {
         Objects.requireNonNull(value);
@@ -29,5 +28,17 @@ public class CategoryID extends Identifier {
 
     public static CategoryID from(final UUID id) {
         return new CategoryID(id);
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final CategoryID that = (CategoryID) o;
+        return getValue().equals(that.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getValue());
     }
 }

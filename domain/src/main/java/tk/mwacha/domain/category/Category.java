@@ -5,7 +5,7 @@ import tk.mwacha.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 
-public class Category extends AggregateRoot<CategoryID> {
+public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     private String name;
     private String description;
@@ -36,6 +36,18 @@ public class Category extends AggregateRoot<CategoryID> {
 
         var deletedAt = active ? null : Instant.now();
         return new Category(CategoryID.unique(), name, description, active, Instant.now(), Instant.now(), deletedAt);
+    }
+
+    public static Category with(final Category aCategory) {
+        return new Category(
+                aCategory.getId(),
+                aCategory.name,
+                aCategory.description,
+                aCategory.isActive(),
+                aCategory.createdAt,
+                aCategory.updatedAt,
+                aCategory.deletedAt
+        );
     }
 
     public CategoryID getId() {
@@ -102,5 +114,13 @@ public class Category extends AggregateRoot<CategoryID> {
         this.updatedAt = Instant.now();
 
         return this;
+    }
+
+    public Category clone() {
+        try {
+           return (Category) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

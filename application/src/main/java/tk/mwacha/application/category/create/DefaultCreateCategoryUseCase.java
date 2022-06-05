@@ -1,11 +1,13 @@
 package tk.mwacha.application.category.create;
 
+import io.vavr.control.Either;
 import tk.mwacha.domain.category.Category;
 import tk.mwacha.domain.category.CategoryGateway;
 import tk.mwacha.domain.validation.handler.Notification;
-import tk.mwacha.domain.validation.handler.ThrowsValidationHandler;
 
 import java.util.Objects;
+
+import static io.vavr.API.*;
 
 
 public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
@@ -17,7 +19,7 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
     }
 
     @Override
-    public CreateCategoryOutput execute(final CreateCategoryCommand command) {
+    public Either<Notification, CreateCategoryOutput> execute(final CreateCategoryCommand command) {
         final var name = command.name();
         final var description = command.description();
         final var isActive = command.isActive();
@@ -26,9 +28,15 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
         final var category = Category.newCategory(name, description, isActive);
         category.validate(notification);
 
-        if(notification.hasError()) {
+        if (notification.hasError()) {
 
         }
-        return CreateCategoryOutput.from(this.categoryGateway.create(category));
+        return notification.hasError() ? Left(notification) : create(category);
+    }
+
+    private Either<Notification, CreateCategoryOutput> create(final Category category) {
+        return Try(() -> this.categoryGateway.create(category))
+                .toEither()
+                .bimap(Notification::create, CreateCategoryOutput::from);
     }
 }
