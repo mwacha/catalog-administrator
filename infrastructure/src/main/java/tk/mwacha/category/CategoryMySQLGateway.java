@@ -2,6 +2,7 @@ package tk.mwacha.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tk.mwacha.category.persistence.CategoryJpaEntity;
 import tk.mwacha.category.persistence.CategoryRepository;
 import tk.mwacha.domain.category.Category;
 import tk.mwacha.domain.category.CategoryGateway;
@@ -19,7 +20,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
 
     @Override
     public Category create(Category aCategory) {
-        return null;
+        return this.repository.save(CategoryJpaEntity.from(aCategory)).toAggregate();
     }
 
     @Override
