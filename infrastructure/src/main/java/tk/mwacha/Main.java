@@ -3,7 +3,7 @@ package tk.mwacha;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.AbstractEnvironment;
-import tk.mwacha.configuration.WebServerConfig;
+import tk.mwacha.infrastructure.configuration.WebServerConfig;
 
 @SpringBootApplication
 public class Main {

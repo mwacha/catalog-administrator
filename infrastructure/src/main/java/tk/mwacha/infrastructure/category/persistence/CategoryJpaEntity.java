@@ -1,4 +1,4 @@
-package tk.mwacha.category.persistence;
+package tk.mwacha.infrastructure.category.persistence;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -46,26 +46,27 @@ public class CategoryJpaEntity {
     @Column(name = "deleted_at", columnDefinition = "DATETIME(6)")
     private Instant deletedAt;
 
-    public static CategoryJpaEntity from(final Category category) {
-        return CategoryJpaEntity.builder()
-                .id(category.getId().getValue())
-                .name(category.getName())
-                .description(category.getDescription())
-                .active(category.isActive())
-                .createdAt(category.getCreatedAt())
-                .updatedAt(category.getUpdatedAt())
-                .deletedAt(category.getDeletedAt()).build();
+    public static CategoryJpaEntity from(final Category aCategory) {
+        return new CategoryJpaEntity(
+                aCategory.getId().getValue(),
+                aCategory.getName(),
+                aCategory.getDescription(),
+                aCategory.isActive(),
+                aCategory.getCreatedAt(),
+                aCategory.getUpdatedAt(),
+                aCategory.getDeletedAt()
+        );
     }
 
     public Category toAggregate() {
         return Category.with(
-                CategoryID.from(id),
-                name,
-                description,
-                active,
-                createdAt,
-                updatedAt,
-                deletedAt
+                CategoryID.from(getId()),
+                getName(),
+                getDescription(),
+                isActive(),
+                getCreatedAt(),
+                getUpdatedAt(),
+                getDeletedAt()
         );
     }
 

@@ -1,6 +1,5 @@
 package tk.mwacha.domain.category;
 
-import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import tk.mwacha.domain.Identifier;
 

@@ -28,9 +28,6 @@ public class DefaultCreateCategoryUseCase extends CreateCategoryUseCase {
         final var category = Category.newCategory(name, description, isActive);
         category.validate(notification);
 
-        if (notification.hasError()) {
-
-        }
         return notification.hasError() ? Left(notification) : create(category);
     }
 

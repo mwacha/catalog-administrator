@@ -1,4 +1,4 @@
-package tk.mwacha.category.persistence;
+package tk.mwacha.infrastructure.category.persistence;
 
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
