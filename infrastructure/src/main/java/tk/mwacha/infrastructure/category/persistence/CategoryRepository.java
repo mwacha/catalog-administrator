@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface CategoryRepository extends JpaRepository<CategoryJpaEntity, UUID> {
+public interface CategoryRepository extends JpaRepository<CategoryJpaEntity, String> {
 
     Page<CategoryJpaEntity> findAll(Specification<CategoryJpaEntity> whereClause, Pageable page);
 }

@@ -17,10 +17,10 @@ public class CategoryValidator extends Validator {
 
     @Override
     public void validate() {
-        checkNameConstrtaints();
+        checkNameConstraints();
     }
 
-    private void checkNameConstrtaints() {
+    private void checkNameConstraints() {
         final var name = this.category.getName();
         if(name == null) {
             this.validationHandler().append(new Error("'name' should not be null"));

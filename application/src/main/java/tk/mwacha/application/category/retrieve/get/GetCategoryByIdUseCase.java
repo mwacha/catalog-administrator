@@ -4,5 +4,5 @@ import tk.mwacha.application.UseCase;
 
 import java.util.UUID;
 
-public abstract class GetCategoryByIdUseCase extends UseCase<UUID, CategoryOutput> {
+public abstract class GetCategoryByIdUseCase extends UseCase<String, CategoryOutput> {
 }

@@ -4,5 +4,5 @@ import tk.mwacha.application.UnitUseCase;
 
 import java.util.UUID;
 
-public abstract class DeleteCategoryUseCase extends UnitUseCase<UUID> {
+public abstract class DeleteCategoryUseCase extends UnitUseCase<String> {
 }

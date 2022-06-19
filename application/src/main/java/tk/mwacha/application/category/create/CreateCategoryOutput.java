@@ -2,11 +2,16 @@ package tk.mwacha.application.category.create;
 
 import tk.mwacha.domain.category.Category;
 
-import java.util.UUID;
 
-public record CreateCategoryOutput(UUID id) {
+public record CreateCategoryOutput(
+        String id
+) {
 
-    public static CreateCategoryOutput from(final Category category) {
-        return new CreateCategoryOutput(category.getId().getValue());
+    public static CreateCategoryOutput from(final String anId) {
+        return new CreateCategoryOutput(anId);
+    }
+
+    public static CreateCategoryOutput from(final Category aCategory) {
+        return new CreateCategoryOutput(aCategory.getId().getValue());
     }
 }

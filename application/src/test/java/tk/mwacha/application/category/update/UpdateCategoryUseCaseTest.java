@@ -194,7 +194,7 @@ public class UpdateCategoryUseCaseTest {
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = false;
-        final var expectedId = UUID.randomUUID();
+        final var expectedId = "";
         final var expectedErrorMessage = "Category with ID $s was not found".formatted(expectedId);
         final var expectedErrorCount = 1;
 
