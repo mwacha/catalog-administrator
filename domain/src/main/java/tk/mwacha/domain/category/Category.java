@@ -1,11 +1,13 @@
 package tk.mwacha.domain.category;
 
+import lombok.Getter;
 import tk.mwacha.domain.AggregateRoot;
 import tk.mwacha.domain.validation.ValidationHandler;
 
 import java.time.Instant;
 import java.util.Objects;
 
+@Getter
 public class Category extends AggregateRoot<CategoryID> implements Cloneable {
 
     private String name;
@@ -61,33 +63,6 @@ public class Category extends AggregateRoot<CategoryID> implements Cloneable {
         return new Category(id, name, description, active, createdAt, updatedAt, deletedAt);
     }
 
-    public CategoryID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public Instant getDeletedAt() {
-        return deletedAt;
-    }
 
     @Override
     public void validate(ValidationHandler handler) {

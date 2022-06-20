@@ -6,7 +6,6 @@ import tk.mwacha.domain.exceptions.DomainException;
 import tk.mwacha.domain.validation.Error;
 
 import java.util.Objects;
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class DefaultGetCategoryByIdUseCase extends GetCategoryByIdUseCase {

@@ -43,7 +43,6 @@ public class GetCategoryByIdUseCaseTest {
         final var expectedId = aCategory.getId();
 
 
-
         when(categoryGateway.findById(eq(expectedId))).thenReturn(Optional.of(aCategory.clone()));
 
         final var actualCategory = useCase.execute(expectedId.getValue());
@@ -65,8 +64,7 @@ public class GetCategoryByIdUseCaseTest {
 
         when(categoryGateway.findById(eq(expectedId))).thenReturn(Optional.empty());
 
-        final var actualException = Assertions.assertThrows(DomainException.class, () ->
-                useCase.execute(expectedId.getValue()));
+        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
@@ -79,8 +77,7 @@ public class GetCategoryByIdUseCaseTest {
 
         when(categoryGateway.findById(eq(expectedId))).thenThrow(new IllegalStateException(expectedErrorMessage));
 
-        final var actualException = Assertions.assertThrows(IllegalStateException.class, () ->
-                useCase.execute(expectedId.getValue()));
+        final var actualException = Assertions.assertThrows(IllegalStateException.class, () -> useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 

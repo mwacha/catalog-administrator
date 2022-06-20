@@ -1,17 +1,15 @@
 package tk.mwacha.domain;
 
 
+import lombok.Getter;
 import tk.mwacha.domain.validation.ValidationHandler;
 
 import java.util.Objects;
 
+@Getter
 public abstract class Entity <ID extends Identifier> {
 
     protected final ID id;
-
-    public ID getId() {
-        return id;
-    }
 
     protected Entity(final ID id) {
         Objects.requireNonNull(id, "id should not be null");

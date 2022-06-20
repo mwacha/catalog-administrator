@@ -4,7 +4,6 @@ import tk.mwacha.domain.category.CategoryGateway;
 import tk.mwacha.domain.category.CategoryID;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class DefaultDeleteCategoryUseCase extends DeleteCategoryUseCase {
 

@@ -17,7 +17,7 @@ class CategoryRepositoryTest {
     @Test
     void givenAnInvalidNullName_whenCallsSave_shouldReturnError() {
         final var expectedPropertyName = "name";
-        final var expectedMessage = "not-null property references a null or transient value : tk.mwacha.category.persistence.CategoryJpaEntity.name";
+        final var expectedMessage = "not-null property references a null or transient value : tk.mwacha.infrastructure.category.persistence.CategoryJpaEntity.name";
 
         final var category = Category.newCategory("Filmes", "A categoria mais assistida", true);
 
@@ -38,7 +38,7 @@ class CategoryRepositoryTest {
     @Test
     void givenAnInvalidNullCreatedAt_whenCallsSave_shouldReturnError() {
         final var expectedPropertyName = "createdAt";
-        final var expectedMessage = "not-null property references a null or transient value : tk.mwacha.category.persistence.CategoryJpaEntity.createdAt";
+        final var expectedMessage = "not-null property references a null or transient value : tk.mwacha.infrastructure.category.persistence.CategoryJpaEntity.createdAt";
 
         final var category = Category.newCategory("Filmes", "A categoria mais assistida", true);
 
@@ -59,7 +59,7 @@ class CategoryRepositoryTest {
     @Test
     void givenAnInvalidNullUpdatedAt_whenCallsSave_shouldReturnError() {
         final var expectedPropertyName = "updatedAt";
-        final var expectedMessage = "not-null property references a null or transient value : tk.mwacha.category.persistence.CategoryJpaEntity.updatedAt";
+        final var expectedMessage = "not-null property references a null or transient value : tk.mwacha.infrastructure.category.persistence.CategoryJpaEntity.updatedAt";
 
         final var category = Category.newCategory("Filmes", "A categoria mais assistida", true);
 
