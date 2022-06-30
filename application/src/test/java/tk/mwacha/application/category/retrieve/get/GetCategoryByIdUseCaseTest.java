@@ -12,6 +12,7 @@ import tk.mwacha.domain.category.Category;
 import tk.mwacha.domain.category.CategoryGateway;
 import tk.mwacha.domain.category.CategoryID;
 import tk.mwacha.domain.exceptions.DomainException;
+import tk.mwacha.domain.exceptions.NotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -60,11 +61,12 @@ public class GetCategoryByIdUseCaseTest {
     @Test
     void givenAInvalidId_whenCallsGetCategory_shouldReturnNotFound() {
         final var expectedId = CategoryID.from(UUID.randomUUID());
-        final var expectedErrorMessage = "Category with ID $s was not found".formatted(expectedId);
+        final var expectedErrorMessage = "Category with ID %s was not found".formatted(expectedId.getValue());
 
         when(categoryGateway.findById(eq(expectedId))).thenReturn(Optional.empty());
 
-        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(expectedId.getValue()));
+        final var actualException = Assertions.assertThrows(NotFoundException.class,
+                () -> useCase.execute(expectedId.getValue()));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 

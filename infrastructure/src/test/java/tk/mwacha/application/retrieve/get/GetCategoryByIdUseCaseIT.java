@@ -59,8 +59,9 @@ public class GetCategoryByIdUseCaseIT {
 
     @Test
     void givenAInvalidId_whenCallsGetCategory_shouldReturnNotFound() {
-        final var expectedErrorMessage = "Category with ID $s was not found";
         final var expectedId = CategoryID.from(UUID.randomUUID());
+
+        final var expectedErrorMessage = "Category with ID %s was not found".formatted(expectedId.getValue());
 
         final var actualException = Assertions.assertThrows(
                 DomainException.class,
