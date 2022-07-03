@@ -12,6 +12,7 @@ import tk.mwacha.domain.category.Category;
 import tk.mwacha.domain.category.CategoryGateway;
 import tk.mwacha.domain.category.CategoryID;
 import tk.mwacha.domain.exceptions.DomainException;
+import tk.mwacha.domain.exceptions.NotFoundException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -194,9 +195,8 @@ public class UpdateCategoryUseCaseTest {
         final var expectedName = "Filmes";
         final var expectedDescription = "A categoria mais assistida";
         final var expectedIsActive = false;
-        final var expectedId = "";
-        final var expectedErrorMessage = "Category with ID $s was not found".formatted(expectedId);
-        final var expectedErrorCount = 1;
+        final var expectedId = "123";
+        final var expectedErrorMessage = "Category with ID %s was not found".formatted(expectedId);
 
         final var command = UpdateCategoryCommand.with(
                 expectedId,
@@ -207,10 +207,9 @@ public class UpdateCategoryUseCaseTest {
         when(categoryGateway.findById(eq(CategoryID.from(expectedId))))
                 .thenReturn(Optional.empty());
 
-        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(command));
+        final var actualException = Assertions.assertThrows(NotFoundException.class, () -> useCase.execute(command));
 
-        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
         Mockito.verify(categoryGateway, times(1)).findById(eq(CategoryID.from(expectedId)));
 
