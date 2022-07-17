@@ -12,7 +12,7 @@ import tk.mwacha.application.category.retrieve.list.ListCategoriesUseCase;
 import tk.mwacha.application.category.update.UpdateCategoryCommand;
 import tk.mwacha.application.category.update.UpdateCategoryOutput;
 import tk.mwacha.application.category.update.UpdateCategoryUseCase;
-import tk.mwacha.domain.category.CategorySearchQuery;
+import tk.mwacha.domain.pagination.SearchQuery;
 import tk.mwacha.domain.pagination.Pagination;
 import tk.mwacha.domain.validation.handler.Notification;
 import tk.mwacha.infrastructure.api.CategoryAPI;
@@ -59,7 +59,7 @@ public class CategoryController implements CategoryAPI {
             final String sort,
             final String direction
     ) {
-        return listCategoriesUseCase.execute(new CategorySearchQuery(page, perPage, search, sort, direction))
+        return listCategoriesUseCase.execute(new SearchQuery(page, perPage, search, sort, direction))
                 .map(CategoryApiPresenter::present);
     }
 

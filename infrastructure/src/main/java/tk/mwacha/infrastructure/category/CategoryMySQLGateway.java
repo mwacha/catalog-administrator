@@ -10,7 +10,7 @@ import tk.mwacha.infrastructure.category.persistence.CategoryRepository;
 import tk.mwacha.domain.category.Category;
 import tk.mwacha.domain.category.CategoryGateway;
 import tk.mwacha.domain.category.CategoryID;
-import tk.mwacha.domain.category.CategorySearchQuery;
+import tk.mwacha.domain.pagination.SearchQuery;
 import tk.mwacha.domain.pagination.Pagination;
 import tk.mwacha.infrastructure.utils.SpecificationsUtils;
 
@@ -46,7 +46,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
     }
 
     @Override
-    public Pagination<Category> findAll(final CategorySearchQuery aQuery) {
+    public Pagination<Category> findAll(final SearchQuery aQuery) {
 
         final var page = PageRequest.of(aQuery.page(),
                 aQuery.perPage(),
