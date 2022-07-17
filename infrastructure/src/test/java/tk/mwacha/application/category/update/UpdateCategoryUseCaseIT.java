@@ -1,4 +1,4 @@
-package tk.mwacha.application.update;
+package tk.mwacha.application.category.update;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

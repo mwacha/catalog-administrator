@@ -1,4 +1,4 @@
-package tk.mwacha.application.retrieve.list;
+package tk.mwacha.application.category.retrieve.list;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mwacha.IntegrationTest;
-import tk.mwacha.application.category.retrieve.list.ListCategoryUseCase;
+import tk.mwacha.application.category.retrieve.list.ListCategoriesUseCase;
 import tk.mwacha.domain.category.Category;
 import tk.mwacha.domain.category.CategorySearchQuery;
 import tk.mwacha.infrastructure.category.persistence.CategoryJpaEntity;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 class ListCategoriesUseCaseIT {
 
     @Autowired
-    private ListCategoryUseCase useCase;
+    private ListCategoriesUseCase useCase;
 
     @Autowired
     private CategoryRepository categoryRepository;

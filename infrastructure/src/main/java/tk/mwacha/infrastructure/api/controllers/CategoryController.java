@@ -8,15 +8,18 @@ import tk.mwacha.application.category.create.CreateCategoryOutput;
 import tk.mwacha.application.category.create.CreateCategoryUseCase;
 import tk.mwacha.application.category.delete.DeleteCategoryUseCase;
 import tk.mwacha.application.category.retrieve.get.GetCategoryByIdUseCase;
+import tk.mwacha.application.category.retrieve.list.ListCategoriesUseCase;
 import tk.mwacha.application.category.update.UpdateCategoryCommand;
 import tk.mwacha.application.category.update.UpdateCategoryOutput;
 import tk.mwacha.application.category.update.UpdateCategoryUseCase;
+import tk.mwacha.domain.category.CategorySearchQuery;
 import tk.mwacha.domain.pagination.Pagination;
 import tk.mwacha.domain.validation.handler.Notification;
 import tk.mwacha.infrastructure.api.CategoryAPI;
-import tk.mwacha.infrastructure.category.models.CategoryApiOutput;
-import tk.mwacha.infrastructure.category.models.CreateCategoryApiInput;
-import tk.mwacha.infrastructure.category.models.UpdateCategoryApiInput;
+import tk.mwacha.infrastructure.category.models.CategoryListResponse;
+import tk.mwacha.infrastructure.category.models.CategoryResponse;
+import tk.mwacha.infrastructure.category.models.CreateCategoryRequest;
+import tk.mwacha.infrastructure.category.models.UpdateCategoryRequest;
 import tk.mwacha.infrastructure.category.presenters.CategoryApiPresenter;
 
 import java.net.URI;
@@ -30,9 +33,10 @@ public class CategoryController implements CategoryAPI {
     private final GetCategoryByIdUseCase getCategoryByIdUseCase;
     private final UpdateCategoryUseCase updateCategoryUseCase;
     private final DeleteCategoryUseCase deleteCategoryUseCase;
+    private final ListCategoriesUseCase listCategoriesUseCase;
 
     @Override
-    public ResponseEntity<?> createCategory(CreateCategoryApiInput input) {
+    public ResponseEntity<?> createCategory(CreateCategoryRequest input) {
        final var command =  CreateCategoryCommand.with(
                 input.name(),
                 input.description(),
@@ -48,17 +52,24 @@ public class CategoryController implements CategoryAPI {
     }
 
     @Override
-    public Pagination<?> listCategories(String search, int page, String perPage, String sort, String direction) {
-        return null;
+    public Pagination<CategoryListResponse> listCategories(
+            final String search,
+            final int page,
+            final int perPage,
+            final String sort,
+            final String direction
+    ) {
+        return listCategoriesUseCase.execute(new CategorySearchQuery(page, perPage, search, sort, direction))
+                .map(CategoryApiPresenter::present);
     }
 
     @Override
-    public CategoryApiOutput getById(String id) {
+    public CategoryResponse getById(String id) {
         return CategoryApiPresenter.present(this.getCategoryByIdUseCase.execute(id));
     }
 
     @Override
-    public ResponseEntity<?> updateById(final String id, final UpdateCategoryApiInput input) {
+    public ResponseEntity<?> updateById(final String id, final UpdateCategoryRequest input) {
         final var aCommand = UpdateCategoryCommand.with(
                 id,
                 input.name(),

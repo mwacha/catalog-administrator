@@ -6,7 +6,7 @@ import tk.mwacha.domain.pagination.Pagination;
 
 import java.util.Objects;
 
-public class DefaultListCategoriesUseCase extends ListCategoryUseCase {
+public class DefaultListCategoriesUseCase extends ListCategoriesUseCase {
 
     private final CategoryGateway categoryGateway;
 

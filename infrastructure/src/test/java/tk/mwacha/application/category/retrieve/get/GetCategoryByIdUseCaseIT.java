@@ -1,4 +1,4 @@
-package tk.mwacha.application.retrieve.get;
+package tk.mwacha.application.category.retrieve.get;
 
 
 import org.junit.jupiter.api.Assertions;

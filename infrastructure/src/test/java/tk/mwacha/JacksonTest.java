@@ -1,10 +1,10 @@
 package tk.mwacha;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ActiveProfiles;
+import tk.mwacha.infrastructure.configuration.ObjectMapperConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -17,11 +17,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @ActiveProfiles("test-integration")
-@ComponentScan(includeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".[MySQLGateway]")
+@JsonTest(includeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = ObjectMapperConfig.class)
 })
-@DataJpaTest
-@ExtendWith(MySQLCleanUpExtension.class)
-public @interface MySQLGatewayTest {
-
+public @interface JacksonTest {
 }

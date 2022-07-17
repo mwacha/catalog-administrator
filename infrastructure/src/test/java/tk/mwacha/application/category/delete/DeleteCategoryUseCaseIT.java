@@ -1,4 +1,4 @@
-package tk.mwacha.application.delete;
+package tk.mwacha.application.category.delete;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

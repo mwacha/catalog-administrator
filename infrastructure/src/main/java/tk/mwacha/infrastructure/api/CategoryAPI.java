@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import tk.mwacha.domain.pagination.Pagination;
-import tk.mwacha.infrastructure.category.models.CategoryApiOutput;
-import tk.mwacha.infrastructure.category.models.CreateCategoryApiInput;
-import tk.mwacha.infrastructure.category.models.UpdateCategoryApiInput;
+import tk.mwacha.infrastructure.category.models.CategoryListResponse;
+import tk.mwacha.infrastructure.category.models.CategoryResponse;
+import tk.mwacha.infrastructure.category.models.CreateCategoryRequest;
+import tk.mwacha.infrastructure.category.models.UpdateCategoryRequest;
 
 @RequestMapping(value = "categories")
 @Tag(name = "Categories")
@@ -35,7 +36,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "422", description = "A validation error was thrown"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
     })
-    ResponseEntity<?> createCategory(@RequestBody CreateCategoryApiInput input);
+    ResponseEntity<?> createCategory(@RequestBody CreateCategoryRequest input);
 
 
     @GetMapping
@@ -45,17 +46,16 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "422", description = "A invalid parameter was received"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
     })
-    Pagination<?> listCategories(
+    Pagination<CategoryListResponse> listCategories(
             @RequestParam(name ="search", required = false, defaultValue = "") final String search,
             @RequestParam(name ="page", required = false, defaultValue = "0") final int page,
-            @RequestParam(name ="perPage", required = false, defaultValue = "10") final String perPage,
+            @RequestParam(name ="perPage", required = false, defaultValue = "10") final int perPage,
             @RequestParam(name ="sort", required = false, defaultValue = "name") final String sort,
             @RequestParam(name ="direction", required = false, defaultValue = "asc") final String direction);
 
 
     @GetMapping(
             value = "{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(summary = "Get a category by it's identifier")
@@ -64,7 +64,7 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "404", description = "Category was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
     })
-    CategoryApiOutput getById(@PathVariable(name = "id") String id);
+    CategoryResponse getById(@PathVariable(name = "id") String id);
 
     @PutMapping(
             value = "{id}",
@@ -77,11 +77,10 @@ public interface CategoryAPI {
             @ApiResponse(responseCode = "404", description = "Category was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
     })
-    ResponseEntity<?> updateById(@PathVariable(name = "id") String id, @RequestBody UpdateCategoryApiInput input);
+    ResponseEntity<?> updateById(@PathVariable(name = "id") String id, @RequestBody UpdateCategoryRequest input);
 
     @DeleteMapping(
             value = "{id}",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.NO_CONTENT)

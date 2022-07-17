@@ -1,4 +1,4 @@
-package tk.mwacha.application.create;
+package tk.mwacha.application.category.create;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
