@@ -8,23 +8,22 @@ import java.util.List;
 
 public class ThrowsValidationHandler implements ValidationHandler {
     @Override
-    public ValidationHandler append(final Error error) {
-        throw DomainException.with(error);
+    public ValidationHandler append(final Error anError) {
+        throw DomainException.with(anError);
     }
 
     @Override
-    public ValidationHandler append(final ValidationHandler handler) {
-        throw DomainException.with(handler.getErrors());
+    public ValidationHandler append(final ValidationHandler anHandler) {
+        throw DomainException.with(anHandler.getErrors());
     }
 
     @Override
-    public ValidationHandler append(Validation validation) {
-       try {
-           validation.validate();
-       } catch (final Exception ex) {
-           throw DomainException.with(new Error(ex.getMessage()));
-       }
-       return this;
+    public <T> T validate(final Validation<T> aValidation) {
+        try {
+            return aValidation.validate();
+        } catch (final Exception ex) {
+            throw DomainException.with(new Error(ex.getMessage()));
+        }
     }
 
     @Override

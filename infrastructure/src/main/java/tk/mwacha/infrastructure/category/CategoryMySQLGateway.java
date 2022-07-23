@@ -14,6 +14,9 @@ import tk.mwacha.domain.pagination.SearchQuery;
 import tk.mwacha.domain.pagination.Pagination;
 import tk.mwacha.infrastructure.utils.SpecificationsUtils;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,6 +70,11 @@ public class CategoryMySQLGateway implements CategoryGateway {
                 pageResult.getSize(),
                 pageResult.getTotalElements(),
                 pageResult.map(CategoryJpaEntity::toAggregate).toList());
+    }
+
+    @Override
+    public List<CategoryID> existsByIds(final Iterable<CategoryID> ids) {
+        return Collections.emptyList();
     }
 
     private Category save(final Category category) {

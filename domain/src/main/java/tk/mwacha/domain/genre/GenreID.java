@@ -35,7 +35,7 @@ public class GenreID extends Identifier {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final CategoryID that = (CategoryID) o;
+        final GenreID that = (GenreID) o;
         return getValue().equals(that.getValue());
     }
 
