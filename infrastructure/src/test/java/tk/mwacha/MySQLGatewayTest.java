@@ -17,7 +17,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @ActiveProfiles("test-integration")
-@ComponentScan(includeFilters = {
+@ComponentScan(basePackages = "tk.mwacha",
+        includeFilters = {
         @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".[MySQLGateway]")
 })
 @DataJpaTest
