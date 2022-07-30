@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Category")
 @Table(name = "category")
 public class CategoryJpaEntity {
 
