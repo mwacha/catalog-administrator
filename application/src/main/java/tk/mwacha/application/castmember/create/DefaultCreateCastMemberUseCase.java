@@ -1,20 +1,14 @@
 package tk.mwacha.application.castmember.create;
 
-import io.vavr.control.Either;
 import tk.mwacha.domain.castmember.CastMember;
 import tk.mwacha.domain.castmember.CastMemberGateway;
-import tk.mwacha.domain.category.Category;
-import tk.mwacha.domain.category.CategoryGateway;
 import tk.mwacha.domain.exceptions.NotificationException;
 import tk.mwacha.domain.validation.handler.Notification;
 
 import java.util.Objects;
 
-import static io.vavr.API.Left;
-import static io.vavr.API.Try;
 
-
-public final class DefaultCreateCastMemberUseCase extends CreateCastMemberUseCase {
+public non-sealed class DefaultCreateCastMemberUseCase extends CreateCastMemberUseCase {
 
     private final CastMemberGateway castMemberGateway;
 
