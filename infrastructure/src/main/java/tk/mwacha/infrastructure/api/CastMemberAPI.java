@@ -9,7 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tk.mwacha.domain.pagination.Pagination;
+import tk.mwacha.infrastructure.castmember.models.CastMemberListResponse;
+import tk.mwacha.infrastructure.castmember.models.CastMemberResponse;
 import tk.mwacha.infrastructure.castmember.models.CreateCastMemberRequest;
+import tk.mwacha.infrastructure.castmember.models.UpdateCastMemberRequest;
 ;
 
 @RequestMapping(value = "cast_members")
@@ -24,62 +27,54 @@ public interface CastMemberAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created successfully"),
             @ApiResponse(responseCode = "422", description = "A validation error was thrown"),
-            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
     })
     ResponseEntity<?> create(@RequestBody CreateCastMemberRequest input);
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "List all cast members")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cast members retrieved"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
+    })
+    Pagination<CastMemberListResponse> list(
+            @RequestParam(name = "search", required = false, defaultValue = "") final String search,
+            @RequestParam(name = "page", required = false, defaultValue = "0") final int page,
+            @RequestParam(name = "perPage", required = false, defaultValue = "10") final int perPage,
+            @RequestParam(name = "sort", required = false, defaultValue = "name") final String sort,
+            @RequestParam(name = "dir", required = false, defaultValue = "asc") final String direction
+    );
 
-//    @GetMapping
-//    @Operation(summary = "List all cast members paginated")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Listed successfully"),
-//            @ApiResponse(responseCode = "422", description = "A invalid parameter was received"),
-//            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
-//    })
-//    Pagination<CastMemberListResponse> listCastMembers(
-//            @RequestParam(name ="search", required = false, defaultValue = "") final String search,
-//            @RequestParam(name ="page", required = false, defaultValue = "0") final int page,
-//            @RequestParam(name ="perPage", required = false, defaultValue = "10") final int perPage,
-//            @RequestParam(name ="sort", required = false, defaultValue = "name") final String sort,
-//            @RequestParam(name ="direction", required = false, defaultValue = "asc") final String direction);
-//
-//
-//    @GetMapping(
-//            value = "{id}",
-//            produces = MediaType.APPLICATION_JSON_VALUE
-//    )
-//    @Operation(summary = "Get a cast member by it's identifier")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Cast Member retrieved successfully"),
-//            @ApiResponse(responseCode = "404", description = "Cast Member was not found"),
-//            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
-//    })
-//    CastMemberResponse getById(@PathVariable(name = "id") String id);
-//
-//    @PutMapping(
-//            value = "{id}",
-//            consumes = MediaType.APPLICATION_JSON_VALUE,
-//            produces = MediaType.APPLICATION_JSON_VALUE
-//    )
-//    @Operation(summary = "Update a cast member by it's identifier")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Cast Member updated successfully"),
-//            @ApiResponse(responseCode = "404", description = "Cast Member was not found"),
-//            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
-//    })
-//    ResponseEntity<?> updateById(@PathVariable(name = "id") String id, @RequestBody UpdateCastMemberRequest input);
-//
-//    @DeleteMapping(
-//            value = "{id}",
-//            produces = MediaType.APPLICATION_JSON_VALUE
-//    )
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @Operation(summary = "Delete a cast member by it's identifier")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "204", description = "Cast Member deleted successfully"),
-//            @ApiResponse(responseCode = "404", description = "Cast Member was not found"),
-//            @ApiResponse(responseCode = "500", description = "An internal server error was thrown")
-//    })
-//    void deleteById(@PathVariable(name = "id") String id);
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Get a cast member by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cast member retrieved"),
+            @ApiResponse(responseCode = "404", description = "Cast member was not found"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
+    })
+    CastMemberResponse getById(@PathVariable String id);
 
+    @PutMapping(
+            value = "{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(summary = "Update a cast member by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cast member updated"),
+            @ApiResponse(responseCode = "404", description = "Cast member was not found"),
+            @ApiResponse(responseCode = "422", description = "A validation error was thrown"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
+    })
+    ResponseEntity<?> updateById(@PathVariable String id, @RequestBody UpdateCastMemberRequest aBody);
+
+    @DeleteMapping(value = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete a cast member by it's identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Cast member deleted"),
+            @ApiResponse(responseCode = "500", description = "An internal server error was thrown"),
+    })
+    void deleteById(@PathVariable String id);
 }
+

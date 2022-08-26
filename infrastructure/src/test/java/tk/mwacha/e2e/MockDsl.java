@@ -6,8 +6,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import tk.mwacha.domain.Identifier;
+import tk.mwacha.domain.castmember.CastMemberID;
+import tk.mwacha.domain.castmember.CastMemberType;
 import tk.mwacha.domain.category.CategoryID;
 import tk.mwacha.domain.genre.GenreID;
+import tk.mwacha.infrastructure.castmember.models.CastMemberResponse;
+import tk.mwacha.infrastructure.castmember.models.CreateCastMemberRequest;
+import tk.mwacha.infrastructure.castmember.models.UpdateCastMemberRequest;
 import tk.mwacha.infrastructure.category.models.CategoryResponse;
 import tk.mwacha.infrastructure.category.models.CreateCategoryRequest;
 import tk.mwacha.infrastructure.category.models.UpdateCategoryRequest;
@@ -175,5 +180,60 @@ public interface MockDsl {
                 .content(Json.writeValueAsString(body));
 
         return this.mvc().perform(request);
+    }
+
+    default CastMemberID givenACastMember(final String aName, final CastMemberType aType) throws Exception {
+        final var aRequestBody = new CreateCastMemberRequest(aName, aType);
+        final var actualId = this.given("/cast_members", aRequestBody);
+        return CastMemberID.from(actualId);
+    }
+
+    default ResultActions givenACastMemberResult(final String aName, final CastMemberType aType) throws Exception {
+        final var aRequestBody = new CreateCastMemberRequest(aName, aType);
+        return this.givenResult("/cast_members", aRequestBody);
+    }
+
+    private ResultActions givenResult(final String url, final Object body) throws Exception {
+        final var aRequest = MockMvcRequestBuilders.post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(Json.writeValueAsString(body));
+
+        return this.mvc().perform(aRequest);
+    }
+
+    default ResultActions listCastMembers(final int page, final int perPage) throws Exception {
+        return listCastMembers(page, perPage, "", "", "");
+    }
+
+    default ResultActions listCastMembers(final int page, final int perPage, final String search) throws Exception {
+        return listCastMembers(page, perPage, search, "", "");
+    }
+
+    default ResultActions listCastMembers(final int page, final int perPage, final String search, final String sort, final String direction) throws Exception {
+        return this.list("/cast_members", page, perPage, search, sort, direction);
+    }
+
+    default CastMemberResponse retrieveACastMember(final CastMemberID anId) throws Exception {
+        return this.retrieve("/cast_members/", anId, CastMemberResponse.class);
+    }
+
+    default ResultActions retrieveACastMemberResult(final CastMemberID anId) throws Exception {
+        return this.retrieveResult("/cast_members/", anId);
+    }
+
+    private ResultActions retrieveResult(final String url, final Identifier anId) throws Exception {
+        final var aRequest = MockMvcRequestBuilders.get(url + anId.getValue())
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8);
+
+        return this.mvc().perform(aRequest);
+    }
+
+    default ResultActions updateACastMember(final CastMemberID anId, final String aName, final CastMemberType aType) throws Exception {
+        return this.update("/cast_members/", anId, new UpdateCastMemberRequest(aName, aType));
+    }
+
+    default ResultActions deleteACastMember(final CastMemberID anId) throws Exception {
+        return this.delete("/cast_members/", anId);
     }
 }
