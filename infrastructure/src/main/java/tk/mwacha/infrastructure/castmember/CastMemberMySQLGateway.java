@@ -13,6 +13,7 @@ import tk.mwacha.infrastructure.castmember.persistence.CastMemberJpaEntity;
 import tk.mwacha.infrastructure.castmember.persistence.CastMemberRepository;
 import tk.mwacha.infrastructure.utils.SpecificationsUtils;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -73,6 +74,10 @@ public class CastMemberMySQLGateway implements CastMemberGateway {
         );
     }
 
+    @Override
+    public List<CastMemberID> existsByIds(final Iterable<CastMemberID> ids) {
+        throw new UnsupportedOperationException();
+    }
     private CastMember save(final CastMember aCastMember) {
         return this.castMemberRepository.save(CastMemberJpaEntity.from(aCastMember))
                 .toAggregate();

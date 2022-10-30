@@ -3,6 +3,7 @@ package tk.mwacha.domain.castmember;
 import tk.mwacha.domain.pagination.Pagination;
 import tk.mwacha.domain.pagination.SearchQuery;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CastMemberGateway {
@@ -16,4 +17,6 @@ public interface CastMemberGateway {
     CastMember update(CastMember genre);
 
     Pagination<CastMember> findAll(SearchQuery query);
+
+    List<CastMemberID> existsByIds(Iterable<CastMemberID> ids);
 }

@@ -13,6 +13,7 @@ import tk.mwacha.infrastructure.genre.persistence.GenreJpaEntity;
 import tk.mwacha.infrastructure.genre.persistence.GenreRepository;
 import tk.mwacha.infrastructure.utils.SpecificationsUtils;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -78,6 +79,11 @@ public class GenreMySQLGateway implements GenreGateway {
     private Genre save(final Genre aGenre) {
         return this.genreRepository.save(GenreJpaEntity.from(aGenre))
                 .toAggregate();
+    }
+
+    @Override
+    public List<GenreID> existsByIds(final Iterable<GenreID> ids) {
+        throw new UnsupportedOperationException();
     }
 
     private Specification<GenreJpaEntity> assembleSpecification(final String terms) {
